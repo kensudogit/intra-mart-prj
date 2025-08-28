@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テスト - COOOLa Micro</title>
+    
+    <!-- 非推奨プロパティ抑制 -->
+    <style>
+        * {
+            -ms-high-contrast: none !important;
+            -ms-high-contrast-adjust: none !important;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #212529;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        
+        .test-section {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .test-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .test-button:hover {
+            background-color: #218838;
+        }
+        
+        .status {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏪 COOOLa Micro</h1>
+            <p>INTRA-MART統合型倉庫管理システム - テストページ</p>
+        </div>
+        
+        <div class="status">
+            <strong>✅ テスト成功！</strong> このHTMLファイルが表示されているということは、基本的なWeb表示は動作しています。
+        </div>
+        
+        <div class="test-section">
+            <h2>🧪 機能テスト</h2>
+            <p>以下のボタンをクリックして、JavaScriptが動作するかテストしてください：</p>
+            <button class="test-button" onclick="testJavaScript()">JavaScriptテスト</button>
+            <button class="test-button" onclick="testConsole()">コンソールテスト</button>
+            <button class="test-button" onclick="testAlert()">アラートテスト</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 システム情報</h2>
+            <p><strong>ブラウザ:</strong> <span id="browser-info"></span></p>
+            <p><strong>画面サイズ:</strong> <span id="screen-info"></span></p>
+            <p><strong>現在時刻:</strong> <span id="time-info"></span></p>
+        </div>
+        
+        <div class="test-section">
+            <h2>🚀 次のステップ</h2>
+            <p>このテストページが正常に表示される場合、問題はReactアプリケーションの設定にあります。</p>
+            <p>このページが表示されない場合、問題はより基本的なWeb表示レベルにあります。</p>
+        </div>
+    </div>
+
+    <script>
+        // 基本的なJavaScriptテスト
+        function testJavaScript() {
+            alert('🎉 JavaScriptが正常に動作しています！');
+            updateStatus('JavaScriptテスト成功');
+        }
+        
+        function testConsole() {
+            console.log('🚀 コンソールログテスト');
+            console.log('✅ JavaScriptが正常に動作しています');
+            updateStatus('コンソールテスト成功 - 開発者ツールを確認してください');
+        }
+        
+        function testAlert() {
+            alert('🔔 アラートテスト成功！');
+            updateStatus('アラートテスト成功');
+        }
+        
+        function updateStatus(message) {
+            const status = document.querySelector('.status');
+            status.innerHTML = `<strong>✅ ${message}</strong> - 時刻: ${new Date().toLocaleTimeString()}`;
+        }
+        
+        // ページ読み込み時の初期化
+        window.addEventListener('load', function() {
+            console.log('🚀 テストページが正常に読み込まれました');
+            
+            // ブラウザ情報の表示
+            document.getElementById('browser-info').textContent = navigator.userAgent;
+            document.getElementById('screen-info').textContent = `${screen.width} x ${screen.height}`;
+            
+            // 時刻の更新
+            function updateTime() {
+                document.getElementById('time-info').textContent = new Date().toLocaleString();
+            }
+            updateTime();
+            setInterval(updateTime, 1000);
+            
+            updateStatus('ページ読み込み完了');
+        });
+    </script>
+</body>
+</html>

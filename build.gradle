@@ -1,0 +1,177 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.gretty' version '3.1.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '2.7.18' apply false
+}
+
+group = 'com.example'
+version = '1.0.0'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.intra-mart.com/maven'
+        name 'INTRA-MART Repository'
+    }
+}
+
+ext {
+    intraMartVersion = '2023.1'
+    springVersion = '5.3.20'
+    springBootVersion = '2.7.18'
+    springCloudVersion = '2021.0.8'
+    tomcatVersion = '9.0.65'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework:spring-framework-bom:${springVersion}"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    // INTRA-MART Core
+    providedCompile "jp.co.intra_mart:intra-mart-core:${intraMartVersion}"
+    
+    // INTRA-MART Web
+    providedCompile "jp.co.intra_mart:intra-mart-web:${intraMartVersion}"
+    
+    // INTRA-MART Security
+    providedCompile "jp.co.intra_mart:intra-mart-security:${intraMartVersion}"
+    
+    // Spring Framework
+    implementation 'org.springframework:spring-webmvc'
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-data-jpa'
+    
+    // Spring Boot Starters
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    
+    // Spring Cloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    
+    // Servlet API
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+    
+    // JSP API
+    providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+    
+    // JSTL
+    implementation 'javax.servlet:jstl:1.2'
+    
+    // Database
+    implementation 'org.postgresql:postgresql:42.3.6'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    
+    // Cache & Message Queue
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    
+    // CSV & Excel Processing
+    implementation 'org.apache.poi:poi:5.2.3'
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'org.apache.poi:poi-ooxml-schemas:4.1.2'
+    implementation 'org.apache.xmlbeans:xmlbeans:5.1.1'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
+    
+    // PDF Generation
+    implementation 'com.itextpdf:itext7-core:7.2.5'
+    
+    // Barcode & QR Code
+    implementation 'com.google.zxing:core:3.5.1'
+    implementation 'com.google.zxing:javase:3.5.1'
+    
+    // Logging
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    
+    // Utilities
+    implementation 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.springframework:spring-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:junit-jupiter:1.18.3'
+    testImplementation 'org.testcontainers:postgresql:1.18.3'
+}
+
+gretty {
+    contextPath = '/intra-mart-app'
+    servletContainer = 'tomcat9'
+    httpPort = 8080
+    httpsPort = 8443
+    contextConfigFile = file('src/main/webapp/META-INF/context.xml')
+    
+    // 開発時の設定
+    scanInterval = 1
+    reloadableClassFiles = ['src/main/webapp/WEB-INF/classes']
+    
+    // ログ設定
+    loggingLevel = 'INFO'
+    
+    // デバッグ設定
+    debugPort = 5005
+    debugSuspend = false
+}
+
+war {
+    archiveFileName = "${project.name}.war"
+    webXml = file('src/main/webapp/WEB-INF/web.xml')
+}
+
+test {
+    useJUnit()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
+    }
+}
+
+// カスタムタスク
+task createDirectories {
+    doLast {
+        def dirs = [
+            'src/main/java',
+            'src/main/resources',
+            'src/main/webapp/WEB-INF',
+            'src/main/webapp/META-INF',
+            'src/test/java',
+            'src/test/resources'
+        ]
+        
+        dirs.each { dir ->
+            mkdir dir
+        }
+    }
+}
+
+task setupIntraMart {
+    dependsOn createDirectories
+    doLast {
+        println "INTRA-MART開発環境のセットアップが完了しました"
+        println "次のコマンドでアプリケーションを起動できます："
+        println "gradlew appRun"
+    }
+}
+
+// 依存関係の解決
+configurations.all {
+    resolutionStrategy {
+        force 'org.slf4j:slf4j-api:1.7.36'
+        force 'ch.qos.logback:logback-classic:1.2.11'
+    }
+}

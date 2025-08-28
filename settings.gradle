@@ -1,0 +1,54 @@
+rootProject.name = 'intra-mart-app'
+
+// INTRA-MART Core modules
+include 'intra-mart-core'
+include 'intra-mart-web'
+include 'intra-mart-security'
+
+// COOOLa Micro Core modules (INTRA-MART用に統合)
+include 'core:core-api'
+include 'core:core-impl'
+include 'core:plugin-manager'
+include 'core:api-gateway'
+
+// COOOLa Micro Plugin modules (INTRA-MART用に統合)
+include 'plugins:product-plugin'
+include 'plugins:inventory-plugin'
+include 'plugins:transaction-plugin'
+include 'plugins:report-plugin'
+include 'plugins:barcode-plugin'
+
+// COOOLa Micro Service modules (INTRA-MART用に統合)
+include 'services:product-service'
+include 'services:inventory-service'
+include 'services:transaction-service'
+include 'services:report-service'
+include 'services:notification-service'
+
+// フロントエンド（Angular）
+include 'frontend'
+
+// プロジェクトの説明
+project(':intra-mart-core').name = 'intra-mart-core'
+project(':intra-mart-web').name = 'intra-mart-web'
+project(':intra-mart-security').name = 'intra-mart-security'
+
+// COOOLa Micro モジュールの説明
+project(':core:core-api').name = 'cooola-core-api'
+project(':core:core-impl').name = 'cooola-core-impl'
+project(':core:plugin-manager').name = 'cooola-plugin-manager'
+project(':core:api-gateway').name = 'cooola-api-gateway'
+
+project(':plugins:product-plugin').name = 'cooola-product-plugin'
+project(':plugins:inventory-plugin').name = 'cooola-inventory-plugin'
+project(':plugins:transaction-plugin').name = 'cooola-transaction-plugin'
+project(':plugins:report-plugin').name = 'cooola-report-plugin'
+project(':plugins:barcode-plugin').name = 'cooola-barcode-plugin'
+
+project(':services:product-service').name = 'cooola-product-service'
+project(':services:inventory-service').name = 'cooola-inventory-service'
+project(':services:transaction-service').name = 'cooola-transaction-service'
+project(':services:report-service').name = 'cooola-report-service'
+project(':services:notification-service').name = 'cooola-notification-service'
+
+project(':frontend').name = 'cooola-frontend'

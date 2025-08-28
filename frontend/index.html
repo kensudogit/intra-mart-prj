@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COOOLa Micro - INTRA-MART統合型倉庫管理システム</title>
+    
+    <!-- ブラウザ拡張機能の干渉を防ぐ強力なCSSオーバーライド -->
+    <style>
+      /* グローバルレベルでの非推奨プロパティ完全無効化 */
+      * {
+        -ms-high-contrast: none !important;
+        -ms-high-contrast-adjust: none !important;
+        -ms-text-size-adjust: none !important;
+        -webkit-text-size-adjust: none !important;
+      }
+      
+      /* 疑似要素でも完全無効化 */
+      *::before, *::after {
+        -ms-high-contrast: none !important;
+        -ms-high-contrast-adjust: none !important;
+      }
+      
+      /* Edgeブラウザの内部要素も対象 */
+      html, body, head, meta, link, script {
+        -ms-high-contrast: none !important;
+        -ms-high-contrast-adjust: none !important;
+      }
+      
+      /* 強制的なオーバーライド */
+      *[style*="-ms-high-contrast"] {
+        -ms-high-contrast: none !important;
+      }
+      
+      /* アプリケーションの表示を確実にする */
+      #root {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 9999 !important;
+        background-color: #f8f9fa !important;
+        min-height: 100vh !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      
+      /* ブラウザ拡張機能の干渉を防ぐ */
+      body {
+        background-color: #f8f9fa !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        color: #212529 !important;
+        overflow-x: hidden !important;
+      }
+      
+      /* 強制的にアプリケーションを表示 */
+      .App {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 9999 !important;
+        background-color: #f8f9fa !important;
+        min-height: 100vh !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 20px !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

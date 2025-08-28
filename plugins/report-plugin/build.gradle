@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'com.example.cooola'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    
+    // INTRA-MART Integration
+    providedCompile 'jp.co.intra_mart:intra-mart-core:2023.1'
+    
+    // COOOLa Core API
+    implementation project(':core:core-api')
+    
+    // Database
+    implementation 'org.postgresql:postgresql:42.3.6'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    
+    // CSV & Excel Processing
+    implementation 'org.apache.poi:poi:5.2.3'
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'org.apache.poi:poi-ooxml-schemas:4.1.2'
+    implementation 'org.apache.xmlbeans:xmlbeans:5.1.1'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
+    
+    // PDF Generation
+    implementation 'com.itextpdf:itext7-core:7.2.5'
+    
+    // Utilities
+    implementation 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>テスト</title>
+</head>
+<body>
+    <h1>テストページ</h1>
+    <p>このページが表示されれば、基本的なWeb表示は動作しています。</p>
+    <p>時刻: <span id="time"></span></p>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+    </script>
+</body>
+</html>

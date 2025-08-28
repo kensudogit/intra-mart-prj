@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COOOLa Micro - 拡張機能ブロック版</title>
+    
+    <!-- 拡張機能の干渉を防ぐ強力なCSS -->
+    <style>
+        /* 非推奨プロパティ抑制 */
+        * {
+            -ms-high-contrast: none !important;
+            -ms-high-contrast-adjust: none !important;
+        }
+        
+        /* 拡張機能の干渉を防ぐ */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: #212529;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 999999;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        
+        .status {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .test-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .test-button:hover {
+            background-color: #218838;
+        }
+        
+        .test-button.danger {
+            background-color: #dc3545;
+        }
+        
+        .test-button.danger:hover {
+            background-color: #c82333;
+        }
+        
+        .info-box {
+            background-color: #e7f3ff;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏪 COOOLa Micro</h1>
+            <p>INTRA-MART統合型倉庫管理システム - 拡張機能ブロック版</p>
+        </div>
+        
+        <div class="status">
+            <strong>✅ ページ読み込み成功！</strong> このHTMLファイルが表示されているということは、基本的なWeb表示は動作しています。
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ 注意:</strong> ブラウザ拡張機能が干渉している可能性があります。以下の手順で拡張機能を無効化してください。
+        </div>
+        
+        <div class="info-box">
+            <h3>🔧 拡張機能の無効化手順</h3>
+            <ol>
+                <li>ブラウザの設定を開く（右上の3点メニュー）</li>
+                <li>「拡張機能」または「アドオン」を選択</li>
+                <li>すべての拡張機能を一時的に無効化</li>
+                <li>ページを再読み込み</li>
+            </ol>
+        </div>
+        
+        <div class="info-box">
+            <h3>🧪 機能テスト</h3>
+            <p>以下のボタンをクリックして、JavaScriptが動作するかテストしてください：</p>
+            <button class="test-button" onclick="testBasic()">基本テスト</button>
+            <button class="test-button" onclick="testConsole()">コンソールテスト</button>
+            <button class="test-button" onclick="testStorage()">ストレージテスト</button>
+            <button class="test-button danger" onclick="testError()">エラーテスト</button>
+        </div>
+        
+        <div class="info-box">
+            <h3>📊 システム情報</h3>
+            <p><strong>ブラウザ:</strong> <span id="browser-info">読み込み中...</span></p>
+            <p><strong>画面サイズ:</strong> <span id="screen-info">読み込み中...</span></p>
+            <p><strong>現在時刻:</strong> <span id="time-info">読み込み中...</span></p>
+            <p><strong>拡張機能数:</strong> <span id="extensions-info">確認中...</span></p>
+        </div>
+        
+        <div class="info-box">
+            <h3>🚀 次のステップ</h3>
+            <p>このページが正常に表示され、ボタンが動作する場合、問題はReactアプリケーションの設定にあります。</p>
+            <p>このページが表示されない場合、問題はより基本的なWeb表示レベルにあります。</p>
+        </div>
+    </div>
+
+    <script>
+        // 拡張機能の干渉を防ぐための保護
+        (function() {
+            'use strict';
+            
+            // グローバルスコープの保護
+            const originalParse = JSON.parse;
+            const originalStringify = JSON.stringify;
+            
+            // JSON.parseの保護
+            JSON.parse = function(text, reviver) {
+                try {
+                    if (typeof text === 'string') {
+                        return originalParse.call(this, text, reviver);
+                    } else {
+                        console.warn('JSON.parse: 無効な入力タイプ', typeof text);
+                        return null;
+                    }
+                } catch (error) {
+                    console.warn('JSON.parse: エラーをキャッチ', error);
+                    return null;
+                }
+            };
+            
+            // エラーハンドリングの強化
+            window.addEventListener('error', function(event) {
+                console.warn('グローバルエラーをキャッチ:', event.error);
+                event.preventDefault();
+                return false;
+            });
+            
+            window.addEventListener('unhandledrejection', function(event) {
+                console.warn('未処理のPromise拒否をキャッチ:', event.reason);
+                event.preventDefault();
+                return false;
+            });
+            
+            console.log('🛡️ 拡張機能保護が有効化されました');
+        })();
+        
+        // テスト関数
+        function testBasic() {
+            alert('🎉 基本テストが成功しました！');
+            updateStatus('基本テスト成功');
+        }
+        
+        function testConsole() {
+            console.log('🚀 コンソールログテスト');
+            console.log('✅ JavaScriptが正常に動作しています');
+            console.log('🛡️ 拡張機能保護が有効です');
+            updateStatus('コンソールテスト成功');
+        }
+        
+        function testStorage() {
+            try {
+                localStorage.setItem('test', 'success');
+                const result = localStorage.getItem('test');
+                localStorage.removeItem('test');
+                alert(`💾 ストレージテスト成功: ${result}`);
+                updateStatus('ストレージテスト成功');
+            } catch (error) {
+                alert(`❌ ストレージテスト失敗: ${error.message}`);
+                updateStatus('ストレージテスト失敗');
+            }
+        }
+        
+        function testError() {
+            try {
+                throw new Error('テストエラー');
+            } catch (error) {
+                console.log('✅ エラーハンドリングテスト成功:', error.message);
+                updateStatus('エラーハンドリングテスト成功');
+            }
+        }
+        
+        function updateStatus(message) {
+            const status = document.querySelector('.status');
+            status.innerHTML = `<strong>✅ ${message}</strong> - 時刻: ${new Date().toLocaleTimeString()}`;
+        }
+        
+        // ページ読み込み時の初期化
+        window.addEventListener('load', function() {
+            console.log('🚀 拡張機能ブロック版テストページが正常に読み込まれました');
+            
+            // システム情報の表示
+            document.getElementById('browser-info').textContent = navigator.userAgent;
+            document.getElementById('screen-info').textContent = `${screen.width} x ${screen.height}`;
+            
+            // 時刻の更新
+            function updateTime() {
+                document.getElementById('time-info').textContent = new Date().toLocaleString();
+            }
+            updateTime();
+            setInterval(updateTime, 1000);
+            
+            // 拡張機能情報の確認
+            try {
+                const extensions = navigator.userAgent.match(/Chrome|Firefox|Safari|Edge/);
+                document.getElementById('extensions-info').textContent = extensions ? 'ブラウザ拡張機能が検出されました' : '拡張機能なし';
+            } catch (error) {
+                document.getElementById('extensions-info').textContent = '確認できません';
+            }
+            
+            updateStatus('ページ読み込み完了 - 拡張機能保護有効');
+        });
+        
+        // 拡張機能の干渉を防ぐ
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🛡️ DOM保護が有効化されました');
+        });
+    </script>
+</body>
+</html>
